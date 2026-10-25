@@ -1,0 +1,158 @@
+[
+  {
+    "id": "gateway",
+    "name": "Local Wi-Fi Gateway",
+    "ip": "192.168.1.1",
+    "category": "local",
+    "region": "Home Router",
+    "description": "Your local router / Wi-Fi Access Point",
+    "is_gateway": true,
+    "enabled": true
+  },
+  {
+    "id": "dns_cf",
+    "name": "Cloudflare DNS (Tier-1 Edge)",
+    "ip": "1.1.1.1",
+    "category": "reference",
+    "region": "Global Edge",
+    "description": "Baseline Internet ISP routing reference",
+    "is_reference": true,
+    "enabled": true
+  },
+  {
+    "id": "dns_google",
+    "name": "Google Public DNS",
+    "ip": "8.8.8.8",
+    "category": "reference",
+    "region": "Global Edge",
+    "description": "Secondary ISP routing reference",
+    "is_reference": true,
+    "enabled": false
+  },
+  {
+    "id": "cs2_eu_fra",
+    "name": "CS2 / Valve SDR (Frankfurt)",
+    "ip": "162.254.197.1",
+    "category": "valve",
+    "region": "EU Central",
+    "description": "Valve Steam Datagram Relay - Frankfurt",
+    "enabled": true
+  },
+  {
+    "id": "cs2_eu_sto",
+    "name": "CS2 / Valve SDR (Stockholm)",
+    "ip": "162.254.198.1",
+    "category": "valve",
+    "region": "EU North",
+    "description": "Valve Steam Datagram Relay - Stockholm",
+    "enabled": true
+  },
+  {
+    "id": "cs2_us_east",
+    "name": "CS2 / Valve SDR (US East)",
+    "ip": "162.254.192.1",
+    "category": "valve",
+    "region": "US East (Sterling)",
+    "description": "Valve Steam Datagram Relay - Virginia",
+    "enabled": true
+  },
+  {
+    "id": "cs2_us_west",
+    "name": "CS2 / Valve SDR (US West)",
+    "ip": "162.254.193.1",
+    "category": "valve",
+    "region": "US West (Seattle)",
+    "description": "Valve Steam Datagram Relay - Seattle",
+    "enabled": false
+  },
+  {
+    "id": "val_eu_fra",
+    "name": "Valorant / Riot (Frankfurt)",
+    "ip": "104.160.141.1",
+    "category": "riot",
+    "region": "EU Central",
+    "description": "Riot Direct European Backbone",
+    "enabled": true
+  },
+  {
+    "id": "val_eu_lon",
+    "name": "Valorant / Riot (London)",
+    "ip": "104.160.142.1",
+    "category": "riot",
+    "region": "EU West",
+    "description": "Riot Direct London Gateway",
+    "enabled": false
+  },
+  {
+    "id": "val_us_east",
+    "name": "Valorant / Riot (US East)",
+    "ip": "192.207.0.1",
+    "category": "riot",
+    "region": "US East",
+    "description": "Riot Direct North America East",
+    "enabled": true
+  },
+  {
+    "id": "val_us_west",
+    "name": "Valorant / Riot (US West)",
+    "ip": "192.64.170.1",
+    "category": "riot",
+    "region": "US West",
+    "description": "Riot Direct North America West",
+    "enabled": false
+  },
+  {
+    "id": "apex_eu",
+    "name": "Apex Legends / EA (Belgium)",
+    "ip": "35.187.0.1",
+    "category": "ea",
+    "region": "EU West",
+    "description": "Respawn / Multiplay EU Datacenter",
+    "enabled": true
+  },
+  {
+    "id": "apex_us_central",
+    "name": "Apex Legends / EA (Iowa)",
+    "ip": "35.224.0.1",
+    "category": "ea",
+    "region": "US Central",
+    "description": "Respawn / Multiplay US Central Datacenter",
+    "enabled": false
+  },
+  {
+    "id": "fortnite_eu",
+    "name": "Fortnite / AWS (Frankfurt)",
+    "ip": "52.94.240.1",
+    "category": "epic",
+    "region": "EU Central",
+    "description": "Epic Games AWS eu-central-1",
+    "enabled": true
+  },
+  {
+    "id": "fortnite_us_east",
+    "name": "Fortnite / AWS (Virginia)",
+    "ip": "52.95.245.1",
+    "category": "epic",
+    "region": "US East",
+    "description": "Epic Games AWS us-east-1",
+    "enabled": true
+  },
+  {
+    "id": "cod_eu",
+    "name": "Call of Duty / Demonware (EU)",
+    "ip": "185.34.106.1",
+    "category": "activision",
+    "region": "EU West",
+    "description": "Activision Demonware Europe",
+    "enabled": false
+  },
+  {
+    "id": "asia_tokyo",
+    "name": "Asia Gaming Hub (Tokyo)",
+    "ip": "104.160.154.1",
+    "category": "riot",
+    "region": "Asia East",
+    "description": "Riot Direct Tokyo Gateway",
+    "enabled": false
+  }
+]

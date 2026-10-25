@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gamer's Paradise &bull; Ultimate Esports &amp; Hardware Suite</title>
+  <meta name="description" content="Enterprise desktop gaming telemetry platform. Concurrent server ping radar, Wi-Fi fault isolation, and region recommendation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css?v=3.0">
+</head>
+<body class="desktop-app-body">
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ====================================================
+       FIRST-TIME SETUP MODAL
+       Shown on first launch; name stored in localStorage.
+       ==================================================== -->
+  <div id="setup-modal-overlay" class="setup-modal-overlay hidden" style="display:none;">
+    <div class="setup-modal-box">
+      <div class="setup-modal-logo">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
+          <rect width="48" height="48" rx="14" fill="#0c1728" />
+          <path d="M10 36L20 20L26 28L31 21L38 36H10Z" fill="url(#sm-grad)" stroke="#10b981" stroke-width="1.5" />
+          <path d="M20 20L23 25L26 22L31 21" stroke="#00e599" stroke-width="2" stroke-linecap="round" />
+          <circle cx="20" cy="16" r="3" fill="#00e599" />
+          <defs>
+            <linearGradient id="sm-grad" x1="10" y1="20" x2="38" y2="36" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00e599" stop-opacity="0.3" />
+              <stop offset="1" stop-color="#059669" stop-opacity="0.8" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h2 class="setup-modal-title">Welcome to <span class="highlight-green">Gamer's Paradise</span></h2>
+      <p class="setup-modal-sub">Your all-in-one esports &amp; hardware optimization suite. Let's set up your profile in seconds.</p>
+      <div class="setup-modal-field">
+        <label for="setup-name-input" class="setup-label">What should we call you?</label>
+        <input id="setup-name-input" type="text" class="setup-input" placeholder="Enter your gamer tag or name..." maxlength="24" autocomplete="off" />
+      </div>
+      <div class="setup-modal-ip-status" id="setup-ip-status">
+        <span class="setup-ip-spinner">⏳</span>
+        <span id="setup-ip-text">Scanning your network &amp; finding best servers...</span>
+      </div>
+      <button id="setup-submit-btn" class="setup-submit-btn" disabled>LAUNCH GAMER'S PARADISE →</button>
+    </div>
+  </div>
+
+  <!-- Desktop App Shell -->
+  <div class="app-shell">
+    
+    <!-- Left Navigation Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <!-- Sidebar Brand Area -->
+      <div class="sidebar-brand-card" data-navigate="view-dashboard" style="cursor: pointer;" title="Return to Home Dashboard">
+        <div class="brand-avatar-box">
+          <svg class="brand-mountain-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="14" fill="#0c1728" />
+            <path d="M10 36L20 20L26 28L31 21L38 36H10Z" fill="url(#brand-mountain-grad)" stroke="#10b981" stroke-width="1.5" />
+            <path d="M20 20L23 25L26 22L31 21" stroke="#00e599" stroke-width="2" stroke-linecap="round" />
+            <circle cx="20" cy="16" r="3" fill="#00e599" />
+            <defs>
+              <linearGradient id="brand-mountain-grad" x1="10" y1="20" x2="38" y2="36" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#00e599" stop-opacity="0.3" />
+                <stop offset="1" stop-color="#059669" stop-opacity="0.8" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text-block">
+          <h2 class="brand-name-h2">GAMER'S PARADISE</h2>
+          <span class="brand-sub-badge">ESPORTS &amp; HARDWARE SUITE</span>
+        </div>
+        <button class="btn-sidebar-collapse" id="btn-toggle-sidebar" title="Collapse Sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Main Navigation Menu -->
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-view="view-dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span class="nav-text">Home</span>
+          <span class="nav-arrow">&rsaquo;</span>
+        </a>
+
+        <a href="#radar" class="nav-item" data-view="view-radar">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+            <path d="M2 12h20"></path>
+          </svg>
+          <span class="nav-text">Tactical Radar</span>
+        </a>
+
+        <a href="#optimizer" class="nav-item" data-view="view-optimizer">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span class="nav-text">Game Optimizer</span>
+        </a>
+
+        <a href="#diagnostics" class="nav-item" data-view="view-diagnostics">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+          </svg>
+          <span class="nav-text">Wi-Fi Diagnostics</span>
+        </a>
+
+        <a href="#history" class="nav-item" data-view="view-history">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span class="nav-text">History & Analytics</span>
+        </a>
+
+        <a href="#fleet" class="nav-item" data-view="view-fleet">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+            <path d="M4 22h16"></path>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+          </svg>
+          <span class="nav-text">Server Fleet</span>
+        </a>
+
+        <a href="#vpn" class="nav-item" data-view="view-vpn">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span class="nav-text">VPN &amp; IP Shield</span>
+        </a>
+
+        <div class="nav-category-header">PERFORMANCE &amp; OS</div>
+
+        <a href="#input-cage" class="nav-item" data-view="view-input-cage">
+          <span class="nav-icon-text">🔒</span>
+          <span class="nav-text">Fullscreen Input Cage</span>
+        </a>
+
+        <a href="#blackbox" class="nav-item" data-view="view-blackbox">
+          <span class="nav-icon-text">⚡</span>
+          <span class="nav-text">Stutter Blackbox</span>
+        </a>
+
+        <a href="#shader-sweeper" class="nav-item" data-view="view-shader-sweeper">
+          <span class="nav-icon-text">🧹</span>
+          <span class="nav-text">Shader Sweeper</span>
+        </a>
+
+        <a href="#ram-freezer" class="nav-item" data-view="view-ram">
+          <span class="nav-icon-text">🚀</span>
+          <span class="nav-text">RAM Process Freezer</span>
+        </a>
+
+        <a href="#sniper" class="nav-item" data-view="view-sniper">
+          <span class="nav-icon-text">🎯</span>
+          <span class="nav-text">Lock &amp; Port Sniper</span>
+        </a>
+
+        <a href="#luminance" class="nav-item" data-view="view-luminance">
+          <span class="nav-icon-text">🌙</span>
+          <span class="nav-text">Luminance Guard</span>
+        </a>
+
+        <div class="nav-category-header">SAVES, MODS &amp; CONFIGS</div>
+
+        <a href="#save-timemachine" class="nav-item" data-view="view-save-timemachine">
+          <span class="nav-icon-text">💾</span>
+          <span class="nav-text">Save Time Machine</span>
+        </a>
+
+        <a href="#loadout-switcher" class="nav-item" data-view="view-loadout-switcher">
+          <span class="nav-icon-text">🔄</span>
+          <span class="nav-text">Loadout Switcher</span>
+        </a>
+
+        <a href="#sens-sync" class="nav-item" data-view="view-sens-sync">
+          <span class="nav-icon-text">📐</span>
+          <span class="nav-text">Config &amp; Sens Sync</span>
+        </a>
+
+        <div class="nav-category-header">AUDIO &amp; MULTIPLAYER</div>
+
+        <a href="#voice-ducking" class="nav-item" data-view="view-voice-ducking">
+          <span class="nav-icon-text">🎙️</span>
+          <span class="nav-text">Voice-Ducking Mixer</span>
+        </a>
+
+        <a href="#audio-lock" class="nav-item" data-view="view-audio">
+          <span class="nav-icon-text">🎧</span>
+          <span class="nav-text">Audio Lock Daemon</span>
+        </a>
+
+        <a href="#preflight-radar" class="nav-item" data-view="view-preflight-radar">
+          <span class="nav-icon-text">🛰️</span>
+          <span class="nav-text">Desktop Server Radar</span>
+        </a>
+
+        <div class="nav-category-header">DAILY WORKFLOW</div>
+
+        <a href="#ocr-grabber" class="nav-item" data-view="view-ocr">
+          <span class="nav-icon-text">✂️</span>
+          <span class="nav-text">Screen-Snip OCR</span>
+        </a>
+
+        <a href="#screenshots" class="nav-item" data-view="view-screenshots">
+          <span class="nav-icon-text">📸</span>
+          <span class="nav-text">Screenshot Indexer</span>
+        </a>
+
+        <a href="#clean-clipboard" class="nav-item" data-view="view-clipboard">
+          <span class="nav-icon-text">📋</span>
+          <span class="nav-text">Clean Paste Shield</span>
+        </a>
+
+        <a href="#netdiag" class="nav-item" data-view="view-netdiag">
+          <span class="nav-icon-text">🔍</span>
+          <span class="nav-text">3-Point Net Diagnostic</span>
+        </a>
+
+        <a href="#settings" class="nav-item" data-view="view-settings">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="nav-text">Network Settings</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Bottom Account Card -->
+      <div class="sidebar-account-footer">
+        <span class="account-section-label">CONNECTION</span>
+        <div class="account-card" data-navigate="view-settings" style="cursor: pointer;" title="Configure Network &amp; Gateway Settings">
+          <div class="account-avatar" id="sidebar-avatar-initials">GP</div>
+          <div class="account-info">
+            <span class="account-name" id="sidebar-account-name">Gamer</span>
+            <span class="account-ip" id="sidebar-user-ip">192.168.1.1</span>
+          </div>
+          <button class="btn-account-action" id="btn-refresh-connection" title="Reconnect / Refresh">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+              <line x1="12" y1="2" x2="12" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <!-- Main Application Viewport -->
+    <div class="app-main-viewport">
+      
+      <!-- Top Title Bar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <!-- Mobile Drawer Toggle Button -->
+          <button class="btn-mobile-menu" id="btn-mobile-menu" aria-label="Toggle Navigation Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <div class="breadcrumb" id="breadcrumb-home-link" data-navigate="view-dashboard" style="cursor: pointer;" title="Click to return Home">
+            <svg class="breadcrumb-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="breadcrumb-current" id="breadcrumb-title">Home</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Active Game Dropdown -->
+          <div class="topbar-pill-select">
+            <span class="select-prefix">🎮</span>
+            <select id="game-select-dropdown" class="topbar-select">
+              <option value="cs2" selected>Counter-Strike 2</option>
+              <option value="valorant">Valorant / Riot</option>
+              <option value="fortnite">Fortnite</option>
+              <option value="apex">Apex Legends</option>
+              <option value="cod">Call of Duty</option>
+              <option value="dota2">Dota 2</option>
+              <option value="overwatch">Overwatch 2</option>
+              <option value="r6siege">Rainbow Six</option>
+            </select>
+          </div>
+
+          <!-- Timer / Rate Button -->
+          <div class="topbar-icon-pill" id="btn-topbar-timer" data-navigate="view-settings" style="cursor: pointer;" title="Ping Interval & Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="topbar-rate-text">1.0s</span>
+          </div>
+
+          <!-- Notification Bell with Badge -->
+          <div class="topbar-icon-pill with-badge" id="btn-topbar-alerts" data-navigate="view-history" style="cursor: pointer;" title="Spike Alerts & Analytics">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="topbar-badge red">1</span>
+          </div>
+
+          <!-- Streak / Quality Flame Pill -->
+          <div class="topbar-icon-pill flame-pill" id="btn-topbar-flame" data-navigate="view-netdiag" style="cursor: pointer;" title="Network Diagnostics">
+            <span class="flame-icon">🔥</span>
+            <span class="flame-text" id="topbar-health-streak">100%</span>
+          </div>
+
+          <!-- Audio Toggle -->
+          <button class="topbar-icon-btn" id="btn-audio-toggle" title="Toggle Sound Feedback">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          </button>
+
+          <!-- In-Game HUD Button -->
+          <button class="btn-topbar-hud" id="btn-topbar-hud" title="Launch In-Game Floating HUD Overlay">
+            <span class="hud-pulse-ring"></span>
+            <span>🎮 IN-GAME HUD</span>
+          </button>
+
+          <!-- VPN / IP Cloaking Status Pill -->
+          <div class="topbar-icon-pill vpn-pill" id="btn-topbar-vpn" data-navigate="view-vpn" style="cursor: pointer;" title="Open Gaming VPN & IP Shield Screen">
+            <span class="vpn-shield-icon">🛡️</span>
+            <span class="vpn-pill-text" id="topbar-vpn-text">IP SHIELD: OFF</span>
+          </div>
+
+          <!-- Audio Lock Quick Status -->
+          <div class="topbar-icon-pill audio-pill" id="btn-topbar-audio" data-navigate="view-audio" style="cursor: pointer;" title="Open Audio Lock Daemon Screen">
+            <span class="pill-icon">🎧</span>
+            <span class="pill-text" id="topbar-audio-text">AUDIO: READY</span>
+          </div>
+
+          <!-- RAM Turbo Quick Status -->
+          <div class="topbar-icon-pill ram-pill" id="btn-topbar-ram" data-navigate="view-ram" style="cursor: pointer;" title="Open RAM Process Freezer Screen">
+            <span class="pill-icon">⚡</span>
+            <span class="pill-text" id="topbar-ram-text">RAM: READY</span>
+          </div>
+
+          <!-- Clean Paste Quick Status -->
+          <div class="topbar-icon-pill clip-pill" id="btn-topbar-clip" data-navigate="view-clipboard" style="cursor: pointer;" title="Open Clean Paste Interceptor Screen">
+            <span class="pill-icon">📋</span>
+            <span class="pill-text" id="topbar-clip-text">CLEAN PASTE: ON</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable Main Content Container -->
+      <div class="app-scrollable-content">
+
+        <!-- ===================================================================
+             VIEW 1: DASHBOARD (Exact Match to User Reference Screenshot)
+             =================================================================== -->
+        <div class="app-view active" id="view-dashboard">
+          
+          <!-- Welcome Hero Banner -->
+          <div class="welcome-hero-card">
+            <div class="welcome-left-col">
+              <h1 class="welcome-heading">Welcome, <span class="highlight-green" id="user-display-name">Gamer</span>!</h1>
+              <p class="welcome-sub">Ready to crush your matches today? Let's keep your ping optimal and lag-free.</p>
+            </div>
+
+            <!-- Top Metric Stat Cards -->
+            <div class="welcome-stats-row">
+              <div class="stat-bubble-card" id="card-stat-region" data-navigate="view-optimizer" title="Click to open Game Optimizer &amp; Region Ladder" style="cursor: pointer;">
+                <div class="bubble-icon-box green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00e599" stroke-width="2">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                </div>
+                <div class="bubble-meta">
+                  <span class="bubble-label">Optimal Region ↗</span>
+                  <strong class="bubble-value" id="dash-stat-best-region">Frankfurt</strong>
+                </div>
+              </div>
+
+              <div class="stat-bubble-card" id="card-stat-wifi" data-navigate="view-diagnostics" title="Click to open Wi-Fi Diagnostics" style="cursor: pointer;">
+                <div class="bubble-icon-box orange">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+                  </svg>
+                </div>
+                <div class="bubble-meta">
+                  <span class="bubble-label">Wi-Fi Quality ↗</span>
+                  <strong class="bubble-value" id="dash-stat-wifi-quality">Clean (100%)</strong>
+                </div>
+              </div>
+
+              <div class="stat-bubble-card" id="card-stat-pipeline" data-navigate="view-netdiag" title="Click to open 3-Point Net Diagnostic" style="cursor: pointer;">
+                <div class="bubble-icon-box muted">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+                    <circle cx="12" cy="8" r="6"></circle>
+                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                  </svg>
+                </div>
+                <div class="bubble-meta">
+                  <span class="bubble-label">Pipeline Status ↗</span>
+                  <strong class="bubble-value" id="dash-stat-overall-status">Optimal</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- In-Game Extension Integration Banner -->
+          <div class="in-game-extension-banner">
+            <div class="igeb-left">
+              <div class="igeb-icon-box">
+                <span class="igeb-dot-pulse"></span>
+                <span class="igeb-icon">🎮</span>
+              </div>
+              <div class="igeb-meta">
+                <div class="igeb-head-line">
+                  <h3 class="igeb-title">In-Game Tactical Extension</h3>
+                  <span class="igeb-badge" id="igeb-game-status">AUTO-HOOK ACTIVE</span>
+                </div>
+                <p class="igeb-desc" id="igeb-desc">
+                  Overlay active telemetry directly on top of your PC game screen. Pinpoints the lowest ping servers, isolates Wi-Fi spikes, and auto-applies in-game matchmaking console commands.
+                </p>
+              </div>
+            </div>
+
+            <div class="igeb-actions">
+              <button class="btn-igeb-primary" id="btn-open-overlay-window" title="Open floating browser/PiP In-Game HUD">
+                <span>🖥 Floating HUD</span>
+              </button>
+              <button class="btn-igeb-secondary" id="btn-launch-native-overlay" title="Launch Native Windows Always-On-Top Window">
+                <span>🚀 Always-On-Top</span>
+              </button>
+              <button class="btn-igeb-ghost" id="btn-voice-recommendation" title="Speak Best Region via AI Voice">
+                <span>🗣 Announce Voice</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Two Action Cards Row (Exact Match to Reference Screenshot) -->
+          <div class="action-cards-grid">
+            <!-- Left Card: Scan Game Regions -> Game Optimizer -->
+            <div class="action-card green-card" id="btn-dash-scan-regions" data-navigate="view-optimizer" title="Click to open Game Optimizer Screen" style="cursor: pointer;">
+              <div class="action-icon-box green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00e599" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                  <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                  <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                  <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                </svg>
+              </div>
+              <div class="action-text-group">
+                <h3 class="action-title">Scan Game Regions ↗</h3>
+                <p class="action-desc" id="dash-scan-desc">Benchmark all global servers for Counter-Strike 2 to pinpoint the lowest ping datacenter.</p>
+              </div>
+            </div>
+
+            <!-- Right Card: Fault Isolation Verdict -> Wi-Fi Diagnostics -->
+            <div class="action-card red-card" id="btn-dash-view-diagnostics" data-navigate="view-diagnostics" title="Click to open Wi-Fi Diagnostics Screen" style="cursor: pointer;">
+              <div class="action-icon-box red">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+              <div class="action-text-group">
+                <h3 class="action-title" id="dash-fault-title">Fault Isolation Verdict ↗</h3>
+                <p class="action-desc" id="dash-fault-desc">Wi-Fi hop is 100% clean (1.8 ms). Lag spikes are originating from the remote server route, not your local network.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- "Your Progress Overview" -> "Your Network & Ping Overview" -->
+          <div class="overview-section">
+            <h2 class="overview-section-title">Your Network Overview</h2>
+
+            <div class="overview-cards-split">
+              <!-- Left Card: Accuracy & Performance -> Packet Integrity & Breakdown -->
+              <div class="overview-card performance-card" data-navigate="view-history" title="Click to view History &amp; Analytics Screen" style="cursor: pointer;">
+                <div class="oc-header">
+                  <div class="oc-title-wrap">
+                    <svg class="oc-icon green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                      <path d="M2 12h20"></path>
+                    </svg>
+                    <span class="oc-title">Accuracy &amp; Performance ↗</span>
+                  </div>
+                  <span class="oc-badge-pill" id="dash-status-pill">Telemetry Active</span>
+                </div>
+
+                <div class="oc-body-accuracy">
+                  <!-- Circular Donut Meter on Left -->
+                  <div class="donut-chart-box">
+                    <svg class="donut-svg" viewBox="0 0 120 120">
+                      <circle class="donut-bg-ring" cx="60" cy="60" r="48" stroke-width="10" />
+                      <circle class="donut-fill-ring" id="donut-circle-progress" cx="60" cy="60" r="48" stroke-width="10" stroke-dasharray="301.6" stroke-dashoffset="12" />
+                    </svg>
+                    <div class="donut-center-label">
+                      <span class="donut-big-val" id="donut-accuracy-val">98%</span>
+                      <span class="donut-sub-val">STABILITY</span>
+                    </div>
+                  </div>
+
+                  <!-- Right Side Metrics Breakdown with Colored Dots -->
+                  <div class="breakdown-list">
+                    <div class="breakdown-row">
+                      <span class="bd-dot purple"></span>
+                      <span class="bd-label">Local Gateway Hop</span>
+                      <strong class="bd-val" id="dash-gw-ping">1.8 ms</strong>
+                    </div>
+
+                    <div class="breakdown-row">
+                      <span class="bd-dot green"></span>
+                      <span class="bd-label">ISP Edge (1.1.1.1)</span>
+                      <strong class="bd-val" id="dash-isp-ping">24.5 ms</strong>
+                    </div>
+
+                    <div class="breakdown-row">
+                      <span class="bd-dot cyan"></span>
+                      <span class="bd-label">Best Game Region</span>
+                      <strong class="bd-val" id="dash-game-best-ping">42.1 ms</strong>
+                    </div>
+
+                    <div class="breakdown-row">
+                      <span class="bd-dot red"></span>
+                      <span class="bd-label">Packet Loss Rate</span>
+                      <strong class="bd-val" id="dash-packet-loss-val">0.0%</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Card: Performance Overview -> Live Latency Waveform Graph -->
+              <div class="overview-card chart-card" data-navigate="view-radar" title="Click to view Tactical Radar Screen" style="cursor: pointer;">
+                <div class="oc-header">
+                  <div class="oc-title-wrap">
+                    <svg class="oc-icon purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="18" y1="20" x2="18" y2="10"></line>
+                      <line x1="12" y1="20" x2="12" y2="4"></line>
+                      <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    <span class="oc-title">Performance Overview ↗</span>
+                  </div>
+
+                  <!-- Time Filter Buttons: Last Week / Last Month -> Live (60s) / 5m -->
+                  <div class="time-filter-pills">
+                    <button class="tf-btn active" data-range="60">Live (60s)</button>
+                    <button class="tf-btn" data-range="300">5 Min</button>
+                  </div>
+                </div>
+
+                <div class="chart-legend-row">
+                  <span class="chart-subtitle-clean">Track real-time jitter, packet response, and server routing stability.</span>
+                  <div class="chart-legend-dots">
+                    <span class="cl-item"><span class="cl-dot green"></span> Stable RTT</span>
+                    <span class="cl-item"><span class="cl-dot red"></span> Spike / Drop</span>
+                  </div>
+                </div>
+
+                <!-- Canvas Chart Area -->
+                <div class="canvas-chart-holder">
+                  <canvas id="overview-latency-canvas" width="600" height="170"></canvas>
+                  <div class="chart-clock-floating">
+                    <span>⏱ 15:00</span>
+                    <span class="clock-play-btn">▶</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 2: TACTICAL RADAR (Dedicated 360° Circular Radar Screen)
+             =================================================================== -->
+        <div class="app-view" id="view-radar">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">360° Tactical Radar Screen</h2>
+              <p class="view-sub">Real-time polar sweep displaying all active game datacenters and local gateway.</p>
+            </div>
+            <div class="view-header-actions">
+              <div class="radar-range-chips">
+                <button class="range-chip active" data-range="250">250ms</button>
+                <button class="range-chip" data-range="150">150ms</button>
+                <button class="range-chip" data-range="80">80ms</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="radar-layout-grid">
+            <div class="radar-canvas-card">
+              <div class="radar-viewport-wrap" id="radar-container">
+                <canvas id="radar-canvas" width="560" height="560"></canvas>
+                <div class="radar-hud-overlay">
+                  <span class="rh-corner top-left">SWEEP: 360° ACTIVE</span>
+                  <span class="rh-corner top-right" id="radar-target-count">SERVERS: 0</span>
+                  <span class="rh-corner bottom-left">ENGINE: icmplib</span>
+                  <span class="rh-corner bottom-right">SCALE: 250 MS</span>
+                </div>
+                <div id="radar-tooltip" class="radar-tooltip-box"></div>
+              </div>
+
+              <div class="radar-legend-bar">
+                <span class="leg-item"><span class="dot-pro"></span> &lt;45ms Pro</span>
+                <span class="leg-item"><span class="dot-good"></span> &lt;80ms Good</span>
+                <span class="leg-item"><span class="dot-warn"></span> &lt;130ms Med</span>
+                <span class="leg-item"><span class="dot-bad"></span> &gt;130ms Loss</span>
+                <span class="leg-item"><span class="dot-gw"></span> Gateway</span>
+              </div>
+            </div>
+
+            <!-- Right Radar Quick Stats -->
+            <div class="radar-sidebar-metrics">
+              <div class="metric-glass-card">
+                <span class="mgc-title">OPTIMAL MATCHMAKING SERVER</span>
+                <div class="mgc-hero-val" id="radar-best-server-name">Loading...</div>
+                <span class="mgc-hero-sub" id="radar-best-server-region">Analyzing...</span>
+                <div class="mgc-stats-triad">
+                  <div><span>LATENCY</span><strong id="radar-best-ping">-- ms</strong></div>
+                  <div><span>JITTER</span><strong id="radar-best-jitter">-- ms</strong></div>
+                  <div><span>LOSS</span><strong id="radar-best-loss">0%</strong></div>
+                </div>
+              </div>
+
+              <div class="metric-glass-card">
+                <span class="mgc-title">IN-GAME COMMAND OPTIMIZER</span>
+                <p class="mgc-desc">Set max search ping so the matchmaker never queues high-latency foreign servers:</p>
+                <div class="console-cmd-pill" id="btn-copy-radar-cmd" title="Click to copy">
+                  <code id="radar-cmd-code">mm_dedicated_search_maxping 45</code>
+                  <span class="copy-icon-glyph">📋</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 3: GAME OPTIMIZER (Region Ladder & Matchmaking Recommendations)
+             =================================================================== -->
+        <div class="app-view" id="view-optimizer">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Region Benchmark & Optimizer</h2>
+              <p class="view-sub">Ranked performance ladder across all worldwide clusters for the selected title.</p>
+            </div>
+            <button class="btn-primary-action" id="btn-sweep-optimizer">
+              <span>⚡ SWEEP ALL REGIONS</span>
+            </button>
+          </div>
+
+          <!-- Region Ladder Table -->
+          <div class="optimizer-ladder-card">
+            <div class="ladder-table-head">
+              <span class="col-rank">RANK</span>
+              <span class="col-server">SERVER LOCATION</span>
+              <span class="col-region">REGION CLUSTER</span>
+              <span class="col-latency">LATENCY &bull; JITTER</span>
+              <span class="col-grade">QUALITY</span>
+            </div>
+            <div class="ladder-table-body" id="ladder-list">
+              <!-- Dynamically populated via radar.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 4: WI-FI DIAGNOSTICS (Hop Isolation: Wi-Fi vs ISP vs Server)
+             =================================================================== -->
+        <div class="app-view" id="view-diagnostics">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Wi-Fi vs. Server Fault Diagnostics</h2>
+              <p class="view-sub">Real-time isolation of local wireless interference, upstream ISP congestion, and game carrier routing.</p>
+            </div>
+          </div>
+
+          <!-- Hop Pipeline Card -->
+          <div class="diagnostics-hop-card">
+            <div class="hop-pipeline-flow">
+              <div class="diag-hop-node" id="diag-node-wifi">
+                <span class="dhn-step">HOP 1</span>
+                <div class="dhn-title">Local Wi-Fi / Router</div>
+                <div class="dhn-val" id="diag-wifi-hop-sub">RTT: -- ms</div>
+                <div class="dhn-badge clean" id="diag-led-wifi">CLEAN</div>
+              </div>
+
+              <div class="diag-hop-arrow">&rarr;</div>
+
+              <div class="diag-hop-node" id="diag-node-isp">
+                <span class="dhn-step">HOP 2</span>
+                <div class="dhn-title">ISP Upstream Gateway</div>
+                <div class="dhn-val" id="diag-isp-hop-sub">Edge: -- ms</div>
+                <div class="dhn-badge clean" id="diag-led-isp">OPTIMAL</div>
+              </div>
+
+              <div class="diag-hop-arrow">&rarr;</div>
+
+              <div class="diag-hop-node" id="diag-node-server">
+                <span class="dhn-step">HOP 3</span>
+                <div class="dhn-title">Game Server Cluster</div>
+                <div class="dhn-val" id="diag-server-hop-sub">Best: -- ms</div>
+                <div class="dhn-badge clean" id="diag-led-server">READY</div>
+              </div>
+            </div>
+
+            <div class="diag-explanation-box">
+              <div class="diag-exp-icon">💡</div>
+              <div class="diag-exp-content">
+                <h4 id="diag-full-title">Pipeline Operating Normally</h4>
+                <p id="diag-full-message">Evaluating packet timing across all hops. Sub-millisecond router ping confirms your Wi-Fi is clean.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 5: HISTORY & ANALYTICS (Waveforms, Jitter, Loss Spikes)
+             =================================================================== -->
+        <div class="app-view" id="view-history">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Live Telemetry Waveforms</h2>
+              <p class="view-sub">60-second rolling oscilloscopes tracking latency waveform and packet-to-packet jitter deltas.</p>
+            </div>
+          </div>
+
+          <div class="analytics-charts-grid">
+            <div class="chart-panel-card">
+              <h3 class="cpc-title">Multi-Server Rolling Latency Stream</h3>
+              <div class="cpc-canvas-holder">
+                <canvas id="latency-canvas" width="800" height="260"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-panel-card">
+              <h3 class="cpc-title">Jitter & Packet Loss Spikes</h3>
+              <div class="cpc-canvas-holder">
+                <canvas id="jitter-canvas" width="800" height="260"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 6: SERVER FLEET (Searchable Grid of Monitored Endpoints)
+             =================================================================== -->
+        <div class="app-view" id="view-fleet">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Server Monitoring Fleet</h2>
+              <p class="view-sub">All active datacenters currently being probed in real time.</p>
+            </div>
+            <button class="btn-primary-action" id="btn-add-fleet-server">
+              <span>+ Add IP Address</span>
+            </button>
+          </div>
+
+          <div class="fleet-toolbar-row">
+            <div class="fleet-search-box">
+              <input type="text" id="server-search-input" class="fleet-search-input" placeholder="Search city, region, or IP..." autocomplete="off">
+            </div>
+
+            <div class="region-filter-tabs" id="category-tabs">
+              <button class="rf-tab active" data-cat="all">ALL</button>
+              <button class="rf-tab" data-cat="europe">EUROPE</button>
+              <button class="rf-tab" data-cat="na">NORTH AMERICA</button>
+              <button class="rf-tab" data-cat="asia">ASIA / ME</button>
+              <button class="rf-tab" data-cat="other">OTHER</button>
+              <button class="rf-tab" data-cat="custom">CUSTOM</button>
+            </div>
+          </div>
+
+          <div class="fleet-grid-cards" id="servers-grid">
+            <!-- Populated dynamically via radar.js -->
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 7: NETWORK SETTINGS (User IP Configuration & Sweep Frequency)
+             =================================================================== -->
+        <div class="app-view" id="view-settings">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Network & Target Settings</h2>
+              <p class="view-sub">Configure user client IP benchmark, probe rate, and telemetry options.</p>
+            </div>
+          </div>
+
+          <div class="settings-form-card">
+            <div class="settings-group">
+              <label class="sg-label">USER CLIENT IP / ROUTER GATEWAY</label>
+              <p class="sg-sub">Enter your specific router IP or local network gateway to benchmark the local hop:</p>
+              <div class="sg-input-row">
+                <input type="text" id="input-user-ip-settings" class="sg-input" placeholder="e.g. 192.168.1.1" value="192.168.1.1">
+                <button class="btn-primary-action" id="btn-save-user-ip-settings">Apply IP</button>
+                <button class="btn-secondary-action" id="btn-detect-user-ip-settings">Auto-Detect Client IP</button>
+              </div>
+            </div>
+
+            <div class="settings-group">
+              <label class="sg-label">PING SWEEP INTERVAL</label>
+              <select id="settings-interval-select" class="sg-select">
+                <option value="0.5">500 ms (Turbo / Fast)</option>
+                <option value="1.0" selected>1.0 s (Standard)</option>
+                <option value="2.0">2.0 s (Eco Mode)</option>
+              </select>
+            </div>
+
+            <div class="settings-group">
+              <label class="sg-label">EXPORT TELEMETRY REPORT</label>
+              <p class="sg-sub">Download complete latency, jitter, and packet loss history as formatted JSON:</p>
+              <button class="btn-secondary-action" id="btn-export-settings">📥 Export Telemetry JSON</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 8: GAMING VPN & IP CLOAKING SHIELD
+             =================================================================== -->
+        <div class="app-view" id="view-vpn">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Gaming VPN &amp; IP Cloaking Shield</h2>
+              <p class="view-sub">Mask your real origin IP address to any worldwide country to prevent DDoS attacks and access regional matchmaking queues.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn-primary-action" id="btn-vpn-main-toggle">
+                <span id="vpn-toggle-btn-text">⚡ CONNECT SHIELD</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- IP Scan Result Banner (populated by JavaScript after geo-lookup) -->
+          <div class="vpn-ip-scan-banner" id="vpn-ip-scan-banner">
+            <span class="vpn-ipscan-icon">🔍</span>
+            <div class="vpn-ipscan-meta">
+              <div class="vpn-ipscan-title">Scanning Your Real IP Address...</div>
+              <div class="vpn-ipscan-detail" id="vpn-ipscan-detail">Querying geo-location service to find your optimal VPN relay node...</div>
+            </div>
+            <span class="vpn-ipscan-badge" id="vpn-ipscan-best-badge">DETECTING</span>
+          </div>
+
+          <!-- VPN Hero Card -->
+          <div class="vpn-hero-card">
+            <div class="vhc-left">
+              <div class="vhc-shield-emblem" id="vhc-shield-emblem">
+                <span class="vhc-shield-glyph">🛡️</span>
+              </div>
+              <div class="vhc-meta">
+                <div class="vhc-title-line">
+                  <h3 class="vhc-title" id="vhc-status-title">IP SHIELD DISCONNECTED</h3>
+                  <span class="vhc-badge alert" id="vhc-status-badge">REAL IP EXPOSED</span>
+                </div>
+                <p class="vhc-desc" id="vhc-desc-text">
+                  Your real public IP address is currently exposed to game servers and peers. Connect to a regional node to cloak your true origin.
+                </p>
+              </div>
+            </div>
+
+            <div class="vhc-triad">
+              <div class="vhc-stat">
+                <span class="vs-label">ORIGIN REAL IP</span>
+                <strong class="vs-val" id="vpn-stat-orig-ip">192.168.1.12</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">CLOAKED EXIT IP</span>
+                <strong class="vs-val highlight" id="vpn-stat-masked-ip">185.12.64.120</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">TUNNEL ROUTING</span>
+                <strong class="vs-val" id="vpn-stat-relay">🇩🇪 Frankfurt Core (+1.4ms)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Steam / In-Game Config Helper -->
+          <div class="vpn-helper-card">
+            <div class="vh-head">
+              <span class="vh-title">⚡ STEAM &amp; IN-GAME LAUNCH CLOAKING COMMAND</span>
+              <span class="vh-badge">ANTI-DDOS</span>
+            </div>
+            <p class="vh-sub">Add this launch option to Counter-Strike 2 or Steam to force the game client to advertise your cloaked relay IP:</p>
+            <div class="console-cmd-pill" id="btn-copy-vpn-cmd" title="Click to copy launch option">
+              <code id="vpn-cmd-code">+net_public_adr 185.12.64.120 -net_port_try 1</code>
+              <span class="copy-icon-glyph">📋</span>
+            </div>
+          </div>
+
+          <!-- Country Relay Node Selection Grid -->
+          <div class="vpn-nodes-section">
+            <h3 class="vns-title">Select Relay Country Node</h3>
+            <div class="vpn-nodes-grid" id="vpn-countries-grid">
+              <!-- Populated dynamically via vpn_module.js -->
+
+            </div>
+          </div>
+
+          <!-- Security Settings -->
+          <div class="vpn-settings-card">
+            <div class="vsc-row">
+              <div>
+                <strong>Emergency Kill Switch</strong>
+                <p class="vsc-sub">Automatically drops all outbound traffic if the tunnel disconnects to prevent IP leaks.</p>
+              </div>
+              <label class="switch-toggle">
+                <input type="checkbox" id="chk-vpn-killswitch" checked>
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+            <div class="vsc-row">
+              <div>
+                <strong>SOCKS5 Local Game Proxy</strong>
+                <p class="vsc-sub">Connect any proxy-compatible game, browser, or tool to <code>127.0.0.1:1080</code>.</p>
+              </div>
+              <span class="vsc-pill">PORT: 1080</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 8: AUDIO OUTPUT ROULETTE (Audio Lock Daemon)
+             =================================================================== -->
+        <div class="app-view" id="view-audio">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">🛡️ ZERO-LATENCY HARDWARE LOCK</div>
+              <h2 class="uhc-title">Audio Output Roulette <span class="highlight-green">Fixer</span></h2>
+              <p class="uhc-sub">Prevents Windows from randomly hijacking your microphone or headset to a plugged-in monitor, controller, or Bluetooth device. Force-reverts in under 100ms.</p>
+            </div>
+            <div class="uhc-stats-triad">
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-green" id="audio-lock-status-text">LOCKED</span>
+                <span class="uhc-stat-lbl">Daemon State</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val" id="audio-reverts-count">0</span>
+                <span class="uhc-stat-lbl">Switches Prevented</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-teal">&lt;100ms</span>
+                <span class="uhc-stat-lbl">Reversion Speed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="util-grid-2">
+            <!-- Playback Hardware Lock Column -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">🔊</span>
+                <div>
+                  <h3 class="uph-title">Preferred Playback (Speakers / Headset)</h3>
+                  <p class="uph-sub">Lock your primary audio output device</p>
+                </div>
+                <button class="btn-clean-mini" id="btn-refresh-audio">🔄 Refresh</button>
+              </div>
+              <div class="audio-device-list" id="audio-playback-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Recording Hardware Lock Column -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">🎙️</span>
+                <div>
+                  <h3 class="uph-title">Preferred Microphone (Capture Device)</h3>
+                  <p class="uph-sub">Lock your gaming mic against sudden switches</p>
+                </div>
+                <button class="btn-clean-mini" id="btn-unlock-all-audio">🔓 Unlock All</button>
+              </div>
+              <div class="audio-device-list" id="audio-recording-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Rogue Switch Interception Event Log -->
+          <div class="util-panel mt-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">⚡</span>
+              <div>
+                <h3 class="uph-title">Auto-Revert Defense Log</h3>
+                <p class="uph-sub">Rogue peripheral takeover attempts prevented by Ping Radar</p>
+              </div>
+            </div>
+            <div class="audio-log-feed" id="audio-log-feed">
+              <div class="empty-state-notice">Audio Lock Daemon active. No rogue OS switches detected yet.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 9: RAM STARVATION (Auto Process Freezer)
+             =================================================================== -->
+        <div class="app-view" id="view-ram">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">⚡ 8GB RAM RESCUE ENGINE</div>
+              <h2 class="uhc-title">Auto Process <span class="highlight-green">Freezer</span></h2>
+              <p class="uhc-sub">Automatically suspends heavy browser tabs, Discord, and launchers when fullscreen games start. Flushes working set memory to reclaim physical RAM and eliminates micro-stutters.</p>
+            </div>
+            <div class="uhc-stats-triad">
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-green" id="ram-saved-mb">0.0 MB</span>
+                <span class="uhc-stat-lbl">RAM Reclaimed</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val" id="ram-frozen-count">0</span>
+                <span class="uhc-stat-lbl">Frozen Processes</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val" id="ram-auto-mode-badge">AUTO (ON)</span>
+                <span class="uhc-stat-lbl">Game Detection</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls Bar -->
+          <div class="util-actions-bar">
+            <div class="uab-left">
+              <button class="btn-primary-action" id="btn-turbo-freeze">⚡ TURBO FREEZE ALL HOGS NOW</button>
+              <button class="btn-clean-cancel" id="btn-unfreeze-all">🔄 UNFREEZE &amp; RESTORE ALL</button>
+            </div>
+            <div class="uab-right">
+              <label class="switch-toggle-label">
+                <span>Auto-Freeze On Game Launch</span>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="chk-auto-freeze" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </label>
+            </div>
+          </div>
+
+          <!-- Running Memory Hogs Table -->
+          <div class="util-panel mt-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">💻</span>
+              <div>
+                <h3 class="uph-title">Active Background Apps Consuming RAM</h3>
+                <p class="uph-sub">Suspended processes have their memory paged to standby, freeing RAM for gaming</p>
+              </div>
+              <button class="btn-clean-mini" id="btn-refresh-ram">🔄 Scan Hogs</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table-pro">
+                <thead>
+                  <tr>
+                    <th>PROCESS NAME</th>
+                    <th>PID</th>
+                    <th>MEMORY CONSUMPTION</th>
+                    <th>STATUS</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="ram-hogs-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 10: FILE LOCK & PORT MYSTERY (Lock & Port Sniper)
+             =================================================================== -->
+        <div class="app-view" id="view-sniper">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">🎯 SYSTEM UNBLOCKER</div>
+              <h2 class="uhc-title">Lock &amp; Port <span class="highlight-green">Sniper</span></h2>
+              <p class="uhc-sub">Instantly reveal and terminate mystery programs holding locked files or blocking developer/game network ports (EADDRINUSE 3000, 8080, etc.).</p>
+            </div>
+          </div>
+
+          <div class="util-grid-2">
+            <!-- Port Sniper Column -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">🔌</span>
+                <div>
+                  <h3 class="uph-title">Port Sniper</h3>
+                  <p class="uph-sub">Find who is occupying a port &amp; kill it</p>
+                </div>
+              </div>
+
+              <div class="sniper-input-row">
+                <input type="number" id="input-sniper-port" class="input-pro" placeholder="Port number (e.g. 3000)" value="3000">
+                <button class="btn-primary-action" id="btn-snipe-port">Snipe Port</button>
+              </div>
+
+              <!-- Quick Common Port Chips -->
+              <div class="quick-chips-row">
+                <span class="qchip-lbl">Quick Scan:</span>
+                <button class="qchip" data-port="3000">3000</button>
+                <button class="qchip" data-port="5000">5000</button>
+                <button class="qchip" data-port="5173">5173</button>
+                <button class="qchip" data-port="8000">8000</button>
+                <button class="qchip" data-port="8080">8080</button>
+                <button class="qchip" data-port="27017">27017</button>
+              </div>
+
+              <div class="sniper-result-card" id="sniper-port-result">
+                <div class="empty-state-notice">Type a port or click a quick-scan chip to reveal culprit process.</div>
+              </div>
+            </div>
+
+            <!-- File Lock Sniper Column -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">📁</span>
+                <div>
+                  <h3 class="uph-title">File / Folder Lock Sniper</h3>
+                  <p class="uph-sub">Identify what process is locking a file from deletion</p>
+                </div>
+              </div>
+
+              <div class="sniper-input-row">
+                <input type="text" id="input-sniper-file" class="input-pro" placeholder="Paste full path to locked file or folder">
+                <button class="btn-primary-action" id="btn-snipe-file">Inspect Lock</button>
+              </div>
+
+              <div class="sniper-result-card" id="sniper-file-result">
+                <div class="empty-state-notice">Paste a locked file path to query Windows Restart Manager.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 11: BLINDING WHITE FLASH AT NIGHT (Luminance Guard)
+             =================================================================== -->
+        <div class="app-view" id="view-luminance">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">🌙 RETINA DEFENSE SYSTEM</div>
+              <h2 class="uhc-title">Luminance <span class="highlight-green">Guard</span></h2>
+              <p class="uhc-sub">Monitors screen perceived brightness in 200ms intervals. If opening a blinding pure #FFFFFF PDF or legacy website at night, hardware DDC/CI backlight drops instantly to protect your eyes.</p>
+            </div>
+            <div class="uhc-stats-triad">
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-green" id="lum-live-val">0 / 255</span>
+                <span class="uhc-stat-lbl">Live Screen Brightness</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val" id="lum-flashes-blocked">0</span>
+                <span class="uhc-stat-lbl">White Flashes Blocked</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-teal" id="lum-guard-state">ACTIVE</span>
+                <span class="uhc-stat-lbl">Shield Status</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="util-grid-2">
+            <!-- Controls Panel -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">⚙️</span>
+                <div>
+                  <h3 class="uph-title">Glare Detection Sensitivity</h3>
+                  <p class="uph-sub">Configure when hardware dimming kicks in</p>
+                </div>
+              </div>
+
+              <div class="slider-control-group">
+                <div class="slider-header">
+                  <span>White Flash Threshold</span>
+                  <strong id="lum-threshold-display">195 / 255</strong>
+                </div>
+                <input type="range" id="slider-lum-threshold" min="150" max="245" value="195" class="slider-pro">
+                <span class="slider-hint">Lower value = triggers on mild light themes; Higher = triggers only on pure white glare.</span>
+              </div>
+
+              <div class="slider-control-group mt-16">
+                <div class="slider-header">
+                  <span>Dimmed Backlight Level</span>
+                  <strong id="lum-dimmed-display">20%</strong>
+                </div>
+                <input type="range" id="slider-lum-dimmed" min="5" max="50" value="20" class="slider-pro">
+                <span class="slider-hint">Hardware brightness level to drop to during blinding flash.</span>
+              </div>
+
+              <div class="switch-row mt-16">
+                <div>
+                  <strong>Night Schedule vs Always Active</strong>
+                  <p class="vsc-sub">Always active protects 24/7; Schedule only activates between 20:00 and 07:00.</p>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="chk-lum-always" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Live Shield & Simulator Panel -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">🛡️</span>
+                <div>
+                  <h3 class="uph-title">Simulation &amp; Defense</h3>
+                  <p class="uph-sub">Experience the instant protective dimming effect</p>
+                </div>
+              </div>
+
+              <div class="lum-test-box">
+                <p>Click below to test hardware monitor DDC/CI dimming. Ping Radar will drop backlight to your configured safety level for 2.5s and smoothly restore it.</p>
+                <button class="btn-primary-action btn-wide" id="btn-test-lum-flash">⚡ TEST SIMULATED GLARE FLASH</button>
+              </div>
+
+              <div class="lum-status-card" id="lum-status-card">
+                <span class="lsc-icon">👁️</span>
+                <div class="lsc-body">
+                  <strong>Hardware DDC/CI Backlight Control Active</strong>
+                  <p id="lum-status-desc">Screen sampled every 200ms. Your retinas are safe from 2 AM white flashes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 12: UNSELECTABLE TEXT (Screen-Snip OCR Grabber)
+             =================================================================== -->
+        <div class="app-view" id="view-ocr">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">✂️ OFFLINE AI OCR</div>
+              <h2 class="uhc-title">Screen-Snip OCR <span class="highlight-green">Grabber</span></h2>
+              <p class="uhc-sub">Copy code snippets, error popups, or game chat straight from YouTube videos, images, or unselectable windows straight into your Windows clipboard with zero latency.</p>
+            </div>
+          </div>
+
+          <!-- Actions Bar -->
+          <div class="ocr-actions-row">
+            <button class="btn-primary-action" id="btn-ocr-fullscreen">🖥️ GRAB FULL SCREEN TEXT</button>
+            <button class="btn-secondary-action" id="btn-ocr-region">📐 GRAB BY COORDINATES</button>
+            <label class="btn-secondary-action file-btn-label">
+              📁 OCR IMAGE FILE
+              <input type="file" id="file-ocr-input" accept="image/*" style="display:none">
+            </label>
+          </div>
+
+          <div class="util-grid-2 mt-16">
+            <!-- OCR Extracted Result Box -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">📋</span>
+                <div>
+                  <h3 class="uph-title">Extracted Text Output</h3>
+                  <p class="uph-sub" id="ocr-char-count">0 characters extracted</p>
+                </div>
+                <button class="btn-clean-mini" id="btn-copy-ocr">📋 Copy To Clipboard</button>
+              </div>
+
+              <textarea id="ocr-result-text" class="ocr-textarea" placeholder="Extracted text from YouTube videos, popups, or images will appear here and automatically copy to your clipboard..."></textarea>
+            </div>
+
+            <!-- Recent OCR History -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">📜</span>
+                <div>
+                  <h3 class="uph-title">Recent OCR Snippets</h3>
+                  <p class="uph-sub">Quickly re-copy past screen grabs</p>
+                </div>
+              </div>
+
+              <div class="ocr-history-list" id="ocr-history-list">
+                <div class="empty-state-notice">No snippets grabbed yet. Click 'Grab Full Screen' to extract all text on your display!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 13: SCREENSHOT GRAVEYARD (Smart Screenshot Indexer)
+             =================================================================== -->
+        <div class="app-view" id="view-screenshots">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">📸 AUTO-CATEGORIZER &amp; SEARCH</div>
+              <h2 class="uhc-title">Smart Screenshot <span class="highlight-green">Indexer</span></h2>
+              <p class="uhc-sub">Eliminates the Screenshot_412.png graveyard. Automatically reads screenshot content, extracts text, indexes into instant SQLite search, and offers 1-click smart renaming.</p>
+            </div>
+            <div class="uhc-stats-triad">
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-green" id="ss-indexed-count">0</span>
+                <span class="uhc-stat-lbl">Indexed Shots</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val" id="ss-folder-name">~/Screenshots</span>
+                <span class="uhc-stat-lbl">Watched Folder</span>
+              </div>
+              <button class="btn-clean-mini mt-8" id="btn-scan-screenshots">🔄 Scan All Now</button>
+            </div>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="ss-search-bar-row">
+            <input type="text" id="input-ss-search" class="input-pro ss-search-input" placeholder="🔍 Search receipts ($24), Wi-Fi passwords, error 404, license keys...">
+            <div class="category-chips-row" id="ss-category-chips">
+              <button class="cat-chip active" data-cat="All">All</button>
+              <button class="cat-chip" data-cat="Receipt">Receipts</button>
+              <button class="cat-chip" data-cat="Wi-Fi &amp; Credentials">Wi-Fi &amp; Passwords</button>
+              <button class="cat-chip" data-cat="Error Log">Errors</button>
+              <button class="cat-chip" data-cat="Code Snippet">Code</button>
+              <button class="cat-chip" data-cat="General">General</button>
+            </div>
+          </div>
+
+          <!-- Screenshots Results Grid -->
+          <div class="screenshots-grid" id="screenshots-results-grid">
+            <div class="empty-state-notice">Click "Scan All Now" to index your Screenshots folder.</div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 14: CLIPBOARD TRASH (Clean Paste Interceptor)
+             =================================================================== -->
+        <div class="app-view" id="view-clipboard">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">📋 CLEAN CLIPBOARD DEFENSE</div>
+              <h2 class="uhc-title">Clean Paste <span class="highlight-green">Interceptor</span></h2>
+              <p class="uhc-sub">Monitors your clipboard in real time. Strips marketing tracker URLs (?utm_source=, fbclid=), heals broken PDF line wraps and split hyphens, and purges ugly HTML styling.</p>
+            </div>
+            <div class="uhc-stats-triad">
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-green" id="clip-cleaned-count">0</span>
+                <span class="uhc-stat-lbl">Pastes Cleaned</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val" id="clip-params-count">0</span>
+                <span class="uhc-stat-lbl">Trackers Defanged</span>
+              </div>
+              <div class="uhc-stat">
+                <span class="uhc-stat-val text-teal" id="clip-pdf-count">0</span>
+                <span class="uhc-stat-lbl">PDF Wraps Healed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Options & Interactive Test Playground -->
+          <div class="util-grid-2">
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">🛡️</span>
+                <div>
+                  <h3 class="uph-title">Active Filter Rules</h3>
+                  <p class="uph-sub">Automatically applied whenever you press Ctrl+C</p>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="chk-clean-clipboard-master" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="filter-rules-list">
+                <div class="fr-item">
+                  <span class="fr-icon">🔗</span>
+                  <div>
+                    <strong>Strip URL Tracking Bloat</strong>
+                    <p class="vsc-sub">Removes utm_source, utm_medium, fbclid, gclid, si, ref parameters</p>
+                  </div>
+                  <span class="badge-active">ACTIVE</span>
+                </div>
+
+                <div class="fr-item">
+                  <span class="fr-icon">📄</span>
+                  <div>
+                    <strong>Heal Broken PDF Line Wraps</strong>
+                    <p class="vsc-sub">Stitches hyphen-split words and eliminates ugly mid-sentence breaks</p>
+                  </div>
+                  <span class="badge-active">ACTIVE</span>
+                </div>
+
+                <div class="fr-item">
+                  <span class="fr-icon">✨</span>
+                  <div>
+                    <strong>HTML Style Purger</strong>
+                    <p class="vsc-sub">Strips hidden background colors, font spans, and converts to crisp plain text</p>
+                  </div>
+                  <span class="badge-active">ACTIVE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Clean Paste Playground -->
+            <div class="util-panel">
+              <div class="util-panel-head">
+                <span class="uph-icon">🧪</span>
+                <div>
+                  <h3 class="uph-title">Live Clean Playground</h3>
+                  <p class="uph-sub">Paste a messy URL or PDF text to test cleaning</p>
+                </div>
+                <button class="btn-clean-mini" id="btn-test-clean-clipboard">⚡ Clean Clipboard Now</button>
+              </div>
+
+              <div class="clean-demo-box">
+                <label class="field-label">TEST CLEAN INPUT:</label>
+                <input type="text" id="input-clean-test" class="input-pro" value="https://store.steampowered.com/app/730/CounterStrike_2/?utm_source=twitter&fbclid=IwAR29&si=xyz123">
+                <button class="btn-primary-action btn-wide mt-12" id="btn-run-clean-test">Clean URL Test</button>
+
+                <div class="clean-output-preview mt-12" id="clean-test-output">
+                  <span class="co-lbl">Cleaned Result:</span>
+                  <code id="clean-test-result">https://store.steampowered.com/app/730/CounterStrike_2/</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Cleaned History Feed -->
+          <div class="util-panel mt-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">📜</span>
+              <div>
+                <h3 class="uph-title">Recently Intercepted &amp; Cleaned Clips</h3>
+                <p class="uph-sub">Live log of clean pastes</p>
+              </div>
+            </div>
+            <div class="clip-feed" id="clip-feed">
+              <div class="empty-state-notice">Clean Paste Interceptor active. Copy any link with utm_source to see it automatically sanitized!</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 15: MYSTERY LAG SPIKES (3-Point Net Diagnostic)
+             =================================================================== -->
+        <div class="app-view" id="view-netdiag">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="util-hero-card">
+            <div class="uhc-main">
+              <div class="uhc-badge-pill">🔍 ISOLATION DIAGNOSTIC</div>
+              <h2 class="uhc-title">3-Point Net <span class="highlight-green">Diagnostic</span></h2>
+              <p class="uhc-sub">Pinpoints whether rubber-banding is caused by local Wi-Fi router bufferbloat, ISP fiber congestion, or a stealth background app saturating bandwidth.</p>
+            </div>
+            <div class="uhc-actions">
+              <button class="btn-primary-action" id="btn-run-netdiag">⚡ RUN INSTANT DIAGNOSTIC</button>
+            </div>
+          </div>
+
+          <!-- Bottleneck Master Alert Banner -->
+          <div class="diag-master-banner" id="diag-master-banner">
+            <span class="dmb-icon" id="dmb-icon">🟢</span>
+            <div class="dmb-text">
+              <h3 class="dmb-title" id="dmb-title">Analyzing Connection Pipeline...</h3>
+              <p class="dmb-desc" id="dmb-desc">Concurrent ping to Local Gateway and 1.1.1.1 with bandwidth polling...</p>
+            </div>
+          </div>
+
+          <!-- 3-Point Triad Cards -->
+          <div class="diag-triad-grid">
+            <!-- Point 1: Local Router Gateway -->
+            <div class="diag-point-card" id="card-diag-gateway">
+              <div class="dpc-head">
+                <span class="dpc-num">POINT 1</span>
+                <span class="dpc-badge" id="dpc-gw-badge">HEALTHY</span>
+              </div>
+              <h4 class="dpc-title">Local Wi-Fi / Gateway</h4>
+              <p class="dpc-ip" id="dpc-gw-ip">192.168.1.1</p>
+              <div class="dpc-metric-row">
+                <div>
+                  <span class="dpc-val" id="dpc-gw-ping">-- ms</span>
+                  <span class="dpc-lbl">Hop Latency</span>
+                </div>
+                <div>
+                  <span class="dpc-val" id="dpc-gw-loss">0.0%</span>
+                  <span class="dpc-lbl">Packet Loss</span>
+                </div>
+              </div>
+              <p class="dpc-sub">Isolates local wireless interference and router bufferbloat</p>
+            </div>
+
+            <!-- Point 2: ISP / Tier-1 Core -->
+            <div class="diag-point-card" id="card-diag-wan">
+              <div class="dpc-head">
+                <span class="dpc-num">POINT 2</span>
+                <span class="dpc-badge" id="dpc-wan-badge">HEALTHY</span>
+              </div>
+              <h4 class="dpc-title">ISP &amp; Upstream Fiber</h4>
+              <p class="dpc-ip">1.1.1.1 (Cloudflare Core)</p>
+              <div class="dpc-metric-row">
+                <div>
+                  <span class="dpc-val" id="dpc-wan-ping">-- ms</span>
+                  <span class="dpc-lbl">Core Latency</span>
+                </div>
+                <div>
+                  <span class="dpc-val" id="dpc-wan-loss">0.0%</span>
+                  <span class="dpc-lbl">Packet Loss</span>
+                </div>
+              </div>
+              <p class="dpc-sub">Isolates ISP peering bottlenecks and external routing faults</p>
+            </div>
+
+            <!-- Point 3: Bandwidth Consumed -->
+            <div class="diag-point-card" id="card-diag-bandwidth">
+              <div class="dpc-head">
+                <span class="dpc-num">POINT 3</span>
+                <span class="dpc-badge" id="dpc-bw-badge">NORMAL</span>
+              </div>
+              <h4 class="dpc-title">Bandwidth Traffic</h4>
+              <p class="dpc-ip">Network Adapter Throughput</p>
+              <div class="dpc-metric-row">
+                <div>
+                  <span class="dpc-val text-green" id="dpc-down-rate">0.0 Mbps</span>
+                  <span class="dpc-lbl">Download</span>
+                </div>
+                <div>
+                  <span class="dpc-val text-teal" id="dpc-up-rate">0.0 Mbps</span>
+                  <span class="dpc-lbl">Upload</span>
+                </div>
+              </div>
+              <p class="dpc-sub">Isolates background downloads eating your bandwidth</p>
+            </div>
+          </div>
+
+          <!-- Top Network Apps Table -->
+          <div class="util-panel mt-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">🌐</span>
+              <div>
+                <h3 class="uph-title">Active Processes With Network Sockets</h3>
+                <p class="uph-sub">Applications actively transmitting or listening for packets</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table-pro">
+                <thead>
+                  <tr>
+                    <th>PROCESS</th>
+                    <th>PID</th>
+                    <th>MEMORY</th>
+                    <th>DESTINATION</th>
+                  </tr>
+                </thead>
+                <tbody id="diag-apps-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 17: FULLSCREEN INPUT CAGE (Accidental Key & Multi-Monitor Minimize Shield)
+             =================================================================== -->
+        <div class="app-view" id="view-input-cage">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Fullscreen Input Cage &amp; Minimize Shield</h2>
+              <p class="view-sub">Swallow Windows key, suppress Sticky Keys 5x Shift prompt, and lock cursor inside primary monitor bounds during intense competitive fights.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn-primary-action" id="btn-cage-toggle">
+                🔒 ENGAGE INPUT CAGE
+              </button>
+            </div>
+          </div>
+
+          <!-- Input Cage Hero Card -->
+          <div class="vpn-hero-card">
+            <div class="vhc-left">
+              <div class="vhc-shield-emblem">
+                <span class="vhc-shield-glyph">🔒</span>
+              </div>
+              <div class="vhc-meta">
+                <div class="vhc-title-line">
+                  <h3 class="vhc-title" id="cage-status-title">INPUT CAGE DISENGAGED</h3>
+                  <span class="vhc-badge muted" id="cage-status-badge">PASS-THROUGH</span>
+                </div>
+                <p class="vhc-desc" id="cage-desc-text">
+                  Normal cursor behavior. Flicking mouse may cross into secondary monitor or trigger Windows key interruptions.
+                </p>
+              </div>
+            </div>
+
+            <div class="vhc-triad">
+              <div class="vhc-stat">
+                <span class="vs-label">CURSOR CLAMP (ClipCursor)</span>
+                <strong class="vs-val" id="cage-stat-cursor">Free Roam</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">WIN KEY HOOK</span>
+                <strong class="vs-val" id="cage-stat-win">Enabled</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">STICKY KEYS (5x Shift)</span>
+                <strong class="vs-val" id="cage-stat-sticky">Normal</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuration & Game Hook Card -->
+          <div class="util-panel mt-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">🎮</span>
+              <div>
+                <h3 class="uph-title">Auto-Cage Competitive Game Integration</h3>
+                <p class="uph-sub">Automatically clamps cursor and swallows Windows key as soon as a match launches</p>
+              </div>
+            </div>
+            <div class="cage-controls-box">
+              <div class="cage-opt-row">
+                <label class="clean-check-label">
+                  <input type="checkbox" id="chk-auto-cage" checked>
+                  <span class="ccl-text">Auto-engage cage whenever CS2, Valorant, Apex, or any competitive .exe is focused</span>
+                </label>
+              </div>
+              <div class="cage-opt-row">
+                <span>Active Game Detection: <strong class="text-green" id="cage-detected-game">Scanning processes...</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 18: STUTTER BLACKBOX (60-Second Rolling Flight Recorder)
+             =================================================================== -->
+        <div class="app-view" id="view-blackbox">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Stutter Blackbox Flight Recorder</h2>
+              <p class="view-sub">60-second rolling circular buffer tracking CPU, RAM, Disk I/O, and Network. Freeze instantly after a lag spike to reveal the guilty process.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn-primary-action alert-btn" id="btn-freeze-blackbox">
+                ⚡ FREEZE INCIDENT / ISOLATE SPIKE
+              </button>
+              <button class="btn-secondary-action" id="btn-reset-blackbox" style="display: none;">
+                ↺ Resume Live Capture
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Telemetry Stream Strip -->
+          <div class="blackbox-metrics-grid">
+            <div class="bb-metric-card">
+              <span class="bbm-label">SYSTEM CPU</span>
+              <strong class="bbm-val" id="bb-live-cpu">0.0%</strong>
+            </div>
+            <div class="bb-metric-card">
+              <span class="bbm-label">SYSTEM RAM</span>
+              <strong class="bbm-val" id="bb-live-ram">0.0%</strong>
+            </div>
+            <div class="bb-metric-card">
+              <span class="bbm-label">DISK WRITE I/O</span>
+              <strong class="bbm-val" id="bb-live-disk">0.0 MB/s</strong>
+            </div>
+            <div class="bb-metric-card">
+              <span class="bbm-label">NETWORK THROUGHPUT</span>
+              <strong class="bbm-val" id="bb-live-net">0 KB/s</strong>
+            </div>
+          </div>
+
+          <!-- Post-Mortem Analysis Card -->
+          <div class="vpn-hero-card mt-16">
+            <div class="vhc-left">
+              <div class="vhc-shield-emblem">
+                <span class="vhc-shield-glyph">🔍</span>
+              </div>
+              <div class="vhc-meta">
+                <div class="vhc-title-line">
+                  <h3 class="vhc-title" id="bb-verdict-text">Active Monitoring (Waiting for incident freeze)...</h3>
+                  <span class="vhc-badge good" id="bb-status-badge">RECORDING (60s ROLLING)</span>
+                </div>
+                <p class="vhc-desc" id="bb-diagnosis-text">
+                  Flight recorder is tracking second-by-second process activity. Click "Freeze Incident" right after a stutter to isolate the guilty process.
+                </p>
+                <div class="bb-rec-box">
+                  <span class="bbr-label">RECOMMENDATION:</span>
+                  <span class="bbr-val" id="bb-recommendation-text">Press freeze button as soon as an FPS drop occurs in-game.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vhc-triad">
+              <div class="vhc-stat">
+                <span class="vs-label">ISOLATED CULPRIT</span>
+                <strong class="vs-val highlight" id="bb-culprit-process">None</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">BOTTLENECK TYPE</span>
+                <strong class="vs-val" id="bb-bottleneck-type">Optimal</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Telemetry Event Log -->
+          <div class="util-panel mt-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">📜</span>
+              <div>
+                <h3 class="uph-title">Rolling Telemetry Log (Last 15 Seconds)</h3>
+                <p class="uph-sub">Red highlights signify critical process spikes exceeding threshold</p>
+              </div>
+            </div>
+            <div class="bb-log-stream" id="bb-log-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 19: SHADER CACHE SWEEPER (Corrupt Shader & DirectX Cleaner)
+             =================================================================== -->
+        <div class="app-view" id="view-shader-sweeper">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Shader Cache Sweeper &amp; Stutter Eliminator</h2>
+              <p class="view-sub">Wipe corrupt, stale DirectX and GPU driver shader binaries across NVIDIA, AMD, and Intel. Flushes standby memory to clear micro-stutters.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn-secondary-action" id="btn-scan-shaders">
+                🔍 Scan Caches
+              </button>
+              <button class="btn-primary-action" id="btn-sweep-shaders">
+                🧹 SWEEP &amp; PURGE SHADER CACHES
+              </button>
+            </div>
+          </div>
+
+          <!-- Shader Stats Hero -->
+          <div class="welcome-stats-row mb-16">
+            <div class="stat-bubble-card">
+              <div class="bubble-icon-box orange"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+              <div class="bubble-meta">
+                <span class="bubble-label">RECLAIMABLE SPACE</span>
+                <strong class="bubble-value" id="shader-total-mb">Scanning...</strong>
+              </div>
+            </div>
+            <div class="stat-bubble-card">
+              <div class="bubble-icon-box green"><svg viewBox="0 0 24 24" fill="none" stroke="#00e599" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg></div>
+              <div class="bubble-meta">
+                <span class="bubble-label">STALE SHADER FILES</span>
+                <strong class="bubble-value" id="shader-total-files">Scanning...</strong>
+              </div>
+            </div>
+            <div class="stat-bubble-card">
+              <div class="bubble-icon-box muted"><svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+              <div class="bubble-meta">
+                <span class="bubble-label">LIFETIME FREED</span>
+                <strong class="bubble-value" id="shader-lifetime-mb">0.0 MB</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shader Targets Grid -->
+          <div class="shader-grid" id="shader-target-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 20: SAVE-STATE TIME MACHINE (Continuous Save Backups & Rollback)
+             =================================================================== -->
+        <div class="app-view" id="view-save-timemachine">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Save-State Time Machine &amp; Rollback Guard</h2>
+              <p class="view-sub">Automated timestamped .zip backups on save modification. Rolling 20-checkpoint history with 1-click safety restore so corrupt saves never ruin playthroughs.</p>
+            </div>
+          </div>
+
+          <!-- Configuration Panel -->
+          <div class="util-panel mb-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">⚙️</span>
+              <div>
+                <h3 class="uph-title">Save Directory Configuration</h3>
+                <p class="uph-sub">Select your game or enter custom save directory to watch</p>
+              </div>
+            </div>
+            <div class="save-config-grid">
+              <div class="form-field">
+                <label class="field-label">GAME PRESET</label>
+                <select id="sel-save-game" class="select-pro"></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">SAVE FOLDER DIRECTORY</label>
+                <input type="text" id="txt-save-path" class="input-pro" placeholder="e.g. %APPDATA%\EldenRing">
+              </div>
+            </div>
+            <div class="save-action-row mt-12">
+              <div class="sar-left">
+                <label class="clean-check-label">
+                  <input type="checkbox" id="chk-auto-watch-save">
+                  <span class="ccl-text">Auto-backup whenever save files are modified in-game (5s debounce)</span>
+                </label>
+              </div>
+              <div class="sar-right">
+                <input type="text" id="txt-backup-label" class="input-pro-sm" placeholder="Checkpoint note (e.g. Pre-Boss)">
+                <button class="btn-primary-action" id="btn-save-backup">💾 Create Checkpoint</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Snapshots History List -->
+          <div class="util-panel">
+            <div class="util-panel-head">
+              <span class="uph-icon">⏱️</span>
+              <div>
+                <h3 class="uph-title">Checkpoints History (<span id="save-snapshot-count">0</span> Saved)</h3>
+                <p class="uph-sub">Click any snapshot to safely restore your game state. An automated safety backup is created first.</p>
+              </div>
+            </div>
+            <div class="snapshot-container" id="save-snapshot-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 21: INSTANT LOADOUT SWITCHER (Zero-Copy Mod & Shader Profiles)
+             =================================================================== -->
+        <div class="app-view" id="view-loadout-switcher">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Instant Loadout Switcher (Zero-Copy Symlinks)</h2>
+              <p class="view-sub">Swap active modpacks, shaders, and configs in 1 second using Windows Directory Junctions. No dragging files, no duplicate gigabytes on your SSD.</p>
+            </div>
+          </div>
+
+          <!-- Loadout Controls -->
+          <div class="util-panel mb-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">🔄</span>
+              <div>
+                <h3 class="uph-title">Target Game &amp; Active In-Game Folder</h3>
+                <p class="uph-sub">Directory junctions transparently link your active profile directly to the game</p>
+              </div>
+            </div>
+            <div class="save-config-grid">
+              <div class="form-field">
+                <label class="field-label">TARGET GAME / CATEGORY</label>
+                <select id="sel-loadout-game" class="select-pro"></select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">ACTIVE IN-GAME FOLDER</label>
+                <input type="text" id="txt-loadout-dest-path" class="input-pro" placeholder="%APPDATA%\.minecraft\mods">
+              </div>
+            </div>
+            <div class="save-action-row mt-12">
+              <input type="text" id="txt-new-profile-name" class="input-pro-sm" placeholder="New Profile Name (e.g. Sodium FPS Boost)">
+              <button class="btn-secondary-action" id="btn-create-profile">+ Create Stored Profile</button>
+            </div>
+          </div>
+
+          <!-- Profiles Grid -->
+          <div class="loadout-grid" id="loadout-profile-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 22: CONFIG & SENS SYNC (Unified cm/360 Muscle Memory Engine)
+             =================================================================== -->
+        <div class="app-view" id="view-sens-sync">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Config &amp; Sens Sync (cm/360 Yaw Mathematics)</h2>
+              <p class="view-sub">Synchronize mouse sensitivity across CS2, Valorant, Apex Legends, Overwatch 2, CoD, and Fortnite using identical physical turn distance to preserve aim muscle memory.</p>
+            </div>
+          </div>
+
+          <!-- Sens Input Card -->
+          <div class="util-panel mb-16">
+            <div class="sens-calc-bar">
+              <div class="scb-item">
+                <label class="field-label">MOUSE DPI</label>
+                <input type="number" id="num-dpi" class="input-pro" value="800" min="100" max="32000" step="50">
+              </div>
+              <div class="scb-item">
+                <label class="field-label">SOURCE GAME</label>
+                <select id="sel-sens-source-game" class="select-pro">
+                  <option value="cs2" selected>Counter-Strike 2 / Source</option>
+                  <option value="valorant">Valorant (Riot)</option>
+                  <option value="apex">Apex Legends</option>
+                  <option value="overwatch">Overwatch 2</option>
+                  <option value="cod">Call of Duty (MW3 / Warzone)</option>
+                  <option value="fortnite">Fortnite</option>
+                  <option value="r6siege">Rainbow Six Siege</option>
+                </select>
+              </div>
+              <div class="scb-item">
+                <label class="field-label">IN-GAME SENSITIVITY</label>
+                <input type="number" id="num-sensitivity" class="input-pro" value="1.25" min="0.01" max="100" step="0.01">
+              </div>
+              <button class="btn-primary-action" id="btn-calc-sens" style="align-self: flex-end;">
+                📐 Sync All Titles
+              </button>
+            </div>
+          </div>
+
+          <!-- Physical 360 Turn Distance Hero -->
+          <div class="vpn-hero-card mb-16">
+            <div class="vhc-left">
+              <div class="vhc-shield-emblem">
+                <span class="vhc-shield-glyph">🎯</span>
+              </div>
+              <div class="vhc-meta">
+                <div class="vhc-title-line">
+                  <h3 class="vhc-title" id="sens-category">Tactical / Arm Aiming</h3>
+                  <span class="vhc-badge good">MUSCLE MEMORY LOCKED</span>
+                </div>
+                <p class="vhc-desc" id="sens-category-desc">
+                  Maximum micro-adjustment precision, standard for CS2 and Valorant competitive pros.
+                </p>
+              </div>
+            </div>
+
+            <div class="vhc-triad">
+              <div class="vhc-stat">
+                <span class="vs-label">PHYSICAL cm / 360°</span>
+                <strong class="vs-val highlight" id="sens-cm-360">41.56 cm</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">INCHES / 360°</span>
+                <strong class="vs-val" id="sens-in-360">16.36"</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">SOURCE eDPI</span>
+                <strong class="vs-val" id="sens-edpi">1000</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Converted Games Grid -->
+          <div class="sens-grid" id="sens-conversion-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 23: VOICE-DUCKING AUDIO MIXER (Audio Session Attenuation)
+             =================================================================== -->
+        <div class="app-view" id="view-voice-ducking">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Voice-Ducking Audio Mixer</h2>
+              <p class="view-sub">Polls Windows Core Audio sessions (pycaw). Drops game volume automatically when teammates speak in Discord/voice chat, restoring immediately when speech ends.</p>
+            </div>
+            <div class="view-header-actions">
+              <button class="btn-primary-action active" id="btn-voice-ducking-toggle">
+                ⚡ AUTO-DUCKING ACTIVE
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Status -->
+          <div class="vpn-hero-card mb-16">
+            <div class="vhc-left">
+              <div class="vhc-shield-emblem">
+                <span class="vhc-shield-glyph">🎙️</span>
+              </div>
+              <div class="vhc-meta">
+                <div class="vhc-title-line">
+                  <h3 class="vhc-title">Voice-Ducking Engine</h3>
+                  <span class="vhc-badge good" id="ducking-status-badge">STANDBY / LISTENING</span>
+                </div>
+                <p class="vhc-desc">
+                  Game audio is automatically dipped during teammate speech so tactical callouts are never drowned out by explosions.
+                </p>
+                <div class="meter-bar-wrap mt-8">
+                  <span class="mb-label">DISCORD AUDIO ACTIVITY METER:</span>
+                  <div class="meter-track">
+                    <div class="meter-fill" id="meter-voice-activity" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="vhc-triad">
+              <div class="vhc-stat">
+                <span class="vs-label">DUCK LEVEL</span>
+                <strong class="vs-val highlight" id="duck-level-val">30%</strong>
+              </div>
+              <div class="vhc-stat">
+                <span class="vs-label">GAME VOLUME</span>
+                <strong class="vs-val" id="game-direct-vol-val">100%</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mixer Controls -->
+          <div class="util-panel">
+            <div class="util-panel-head">
+              <span class="uph-icon">🎚️</span>
+              <div>
+                <h3 class="uph-title">Mixer Attenuation &amp; Session Configuration</h3>
+                <p class="uph-sub">Fine-tune ducking depth and tweak active game master volume on the fly</p>
+              </div>
+            </div>
+
+            <div class="mixer-sliders-grid">
+              <div class="form-field">
+                <label class="field-label">DUCK GAME VOLUME TO WHEN TEAMMATE SPEAKS</label>
+                <input type="range" id="rng-duck-level" class="range-pro" min="10" max="80" value="30">
+                <span class="field-sub">Drop game to 30% for crystal clear voice chat</span>
+              </div>
+
+              <div class="form-field">
+                <label class="field-label">ACTIVE GAME MASTER VOLUME (ON THE FLY)</label>
+                <input type="range" id="rng-game-direct-vol" class="range-pro" min="0" max="100" value="100">
+                <span class="field-sub">Direct master slider for focused game audio session</span>
+              </div>
+            </div>
+
+            <div class="save-config-grid mt-16">
+              <div class="form-field">
+                <label class="field-label">VOICE CHAT APPLICATION</label>
+                <select id="sel-voice-app" class="select-pro">
+                  <option value="discord.exe" selected>Discord (discord.exe)</option>
+                  <option value="ts3client_win64.exe">TeamSpeak 3 (ts3client_win64.exe)</option>
+                  <option value="steamwebhelper.exe">Steam Voice (steamwebhelper.exe)</option>
+                  <option value="slack.exe">Slack (slack.exe)</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">ACTIVE GAME ENGINE</label>
+                <select id="sel-game-app" class="select-pro">
+                  <option value="cs2.exe" selected>Counter-Strike 2 (cs2.exe)</option>
+                  <option value="valorant-win64-shipping.exe">Valorant (valorant.exe)</option>
+                  <option value="r5apex.exe">Apex Legends (r5apex.exe)</option>
+                  <option value="overwatch.exe">Overwatch 2 (overwatch.exe)</option>
+                  <option value="dota2.exe">Dota 2 (dota2.exe)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             VIEW 24: DESKTOP SERVER RADAR (Pre-flight Server Probe & Watcher)
+             =================================================================== -->
+        <div class="app-view" id="view-preflight-radar">
+          <button class="btn-view-back-home" data-navigate="view-dashboard" title="Return to Home Dashboard"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Home</button>
+          <div class="view-header-bar">
+            <div>
+              <h2 class="view-h2">Desktop Server Radar &amp; Pre-flight Watcher</h2>
+              <p class="view-sub">Probe server latency, jitter, queues, and player count before launching game clients. Never wait 3 minutes for a game to load only to find the server lagging or full.</p>
+            </div>
+          </div>
+
+          <!-- Add Server to Radar -->
+          <div class="util-panel mb-16">
+            <div class="util-panel-head">
+              <span class="uph-icon">➕</span>
+              <div>
+                <h3 class="uph-title">Monitor Custom Server / Community Hub</h3>
+                <p class="uph-sub">Enter game server IP and query port (UDP A2S or TCP)</p>
+              </div>
+            </div>
+            <div class="pf-add-bar">
+              <input type="text" id="txt-pf-name" class="input-pro" placeholder="Server Friendly Name (e.g. My Clan Warmup)">
+              <input type="text" id="txt-pf-game" class="input-pro" placeholder="Game Title (e.g. CS2 / Rust)">
+              <input type="text" id="txt-pf-ip" class="input-pro" placeholder="IP Address (e.g. 155.133.226.71)">
+              <input type="number" id="txt-pf-port" class="input-pro" value="27015" placeholder="Port">
+              <button class="btn-primary-action" id="btn-add-preflight-server">+ Add to Radar</button>
+            </div>
+          </div>
+
+          <!-- Monitored Servers Grid -->
+          <div class="preflight-grid" id="preflight-server-grid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+      </div> <!-- /app-scrollable-content -->
+
+    </div> <!-- /app-main-viewport -->
+
+  </div> <!-- /app-shell -->
+
+  <!-- Add Custom Server Modal -->
+  <div class="modal-backdrop" id="modal-add-target">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h3 class="modal-h3">Add Custom Game Server</h3>
+        <button class="btn-close-clean" id="btn-close-modal">&times;</button>
+      </div>
+
+      <form id="form-add-target" class="modal-body-form">
+        <div class="form-field">
+          <label for="input-ip" class="field-label">SERVER IP OR HOSTNAME *</label>
+          <input type="text" id="input-ip" class="input-pro" placeholder="e.g. 155.133.248.34 or mc.hypixel.net" required autocomplete="off">
+        </div>
+
+        <div class="form-field">
+          <label for="input-name" class="field-label">FRIENDLY NAME</label>
+          <input type="text" id="input-name" class="input-pro" placeholder="e.g. My Community Server">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="input-category" class="field-label">CATEGORY</label>
+            <select id="input-category" class="select-pro">
+              <option value="custom">Custom Server</option>
+              <option value="cs2">Counter-Strike 2</option>
+              <option value="valorant">Valorant</option>
+              <option value="fortnite">Fortnite</option>
+              <option value="apex">Apex Legends</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="input-region" class="field-label">REGION / LOCATION</label>
+            <input type="text" id="input-region" class="input-pro" placeholder="e.g. Frankfurt / US East">
+          </div>
+        </div>
+
+        <div class="modal-foot">
+          <button type="button" class="btn-clean-cancel" id="btn-cancel-modal">Cancel</button>
+          <button type="submit" class="btn-primary-action">Add To Fleet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/app.js?v=3.0"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "gamers-paradise",
+  "version": "1.0.0",
+  "description": "Enterprise esports gaming network radar, OS interruption shield, and hardware telemetry suite.",
+  "main": "server.py",
+  "scripts": {
+    "start": "python app_desktop.py",
+    "dev": "python run.py",
+    "test": "python test_modular_suite.py",
+    "build": "python build_exe.py"
+  },
+  "keywords": [
+    "gaming",
+    "telemetry",
+    "ping-radar",
+    "vpn",
+    "esports",
+    "audio-lock",
+    "input-cage",
+    "stutter-blackbox"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>In-Game Ping Radar &bull; Tactical HUD Extension</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/overlay.css">
+</head>
+<body class="overlay-body">
+  <!-- Draggable In-Game HUD Box -->
+  <div class="hud-window" id="hud-window">
+    
+    <!-- HUD Header Bar -->
+    <div class="hud-header" id="hud-drag-bar">
+      <div class="hud-brand-tag">
+        <span class="live-pulse-dot"></span>
+        <span class="hud-game-title" id="hud-game-name">CS2 EXTENSION</span>
+        <span class="hud-vpn-badge" id="hud-vpn-badge" style="font-size: 8.5px; font-weight: 800; padding: 2px 5px; border-radius: 4px; background: rgba(0, 229, 153, 0.1); border: 1px solid rgba(0, 229, 153, 0.25); color: #00e599; margin-left: 6px;">🛡️ DE (185.12.64.120)</span>
+      </div>
+
+      <div class="hud-controls">
+        <button class="hud-btn-pill" id="btn-toggle-ghost" title="Cycle Opacity (100% / 80% / 50%)">👻 85%</button>
+        <button class="hud-btn-pill" id="btn-toggle-mini" title="Minimize to Mini-Bar">_</button>
+      </div>
+    </div>
+
+    <!-- Main Expanded HUD Body -->
+    <div class="hud-body" id="hud-main-body">
+
+      <!-- Optimal Server Hero Banner -->
+      <div class="hud-hero-card">
+        <div class="hhc-head">
+          <span class="hhc-label">OPTIMAL DATACENTER</span>
+          <span class="hhc-badge-pro" id="hud-server-grade">RANK #1</span>
+        </div>
+        <div class="hhc-server-title" id="hud-best-server">Frankfurt, Germany</div>
+        <div class="hhc-metrics-row">
+          <div class="hhc-m-item">
+            <span class="m-lbl">LATENCY</span>
+            <strong class="m-val" id="hud-best-ping">-- ms</strong>
+          </div>
+          <div class="hhc-m-item">
+            <span class="m-lbl">JITTER</span>
+            <strong class="m-val" id="hud-best-jitter">±0.0 ms</strong>
+          </div>
+          <div class="hhc-m-item">
+            <span class="m-lbl">PACKET LOSS</span>
+            <strong class="m-val" id="hud-best-loss">0.0%</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-Game Command Injection Pill -->
+      <div class="hud-cmd-card" id="btn-copy-hud-cmd" title="Click to copy in-game console command">
+        <div class="hcc-inner">
+          <span class="hcc-prefix">IN-GAME COMMAND:</span>
+          <code class="hcc-code" id="hud-cmd-text">mm_dedicated_search_maxping 45</code>
+        </div>
+        <span class="hcc-copy-badge" id="hud-copy-badge">COPY</span>
+      </div>
+
+      <!-- Wi-Fi vs Server Fault Diagnostics Bar -->
+      <div class="hud-diag-bar" id="hud-diag-bar">
+        <span class="diag-bullet" id="hud-diag-bullet">●</span>
+        <span class="diag-text" id="hud-diag-text">Wi-Fi: 1.1 ms (Clean) &bull; Route: Optimal</span>
+      </div>
+
+      <!-- Runner-Up Servers Ladder -->
+      <div class="hud-ladder-section">
+        <div class="hls-head">TOP REGIONAL CLUSTERS</div>
+        <div class="hls-list" id="hud-ladder-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Quick Action Footer -->
+      <div class="hud-footer">
+        <button class="hud-footer-btn" id="btn-voice-announce" title="Hear AI Voice Announcement">
+          🗣 Announce
+        </button>
+        <button class="hud-footer-btn" id="btn-native-hud-launch" title="Launch Native Windows Always-On-Top Window">
+          🚀 Native Window
+        </button>
+      </div>
+
+    </div> <!-- /hud-main-body -->
+
+  </div> <!-- /hud-window -->
+
+  <script src="/static/overlay.js"></script>
+</body>
+</html>
