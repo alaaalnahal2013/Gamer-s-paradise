@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 import shutil
 import time
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 
 logger = logging.getLogger("ping_radar.shader_sweeper")
 
@@ -72,7 +72,7 @@ class ShaderSweeper:
                 "id": "steam_shader",
                 "name": "Steam Fossilize Shader Cache",
                 "vendor": "Valve Steam",
-                "path": Path(local_appdata) / "Steam" / "htmlcache" if local_appdata else None
+                "path": Path(local_appdata) / "Steam" / "shadercache" if local_appdata else None
             }
         ]
         return targets
@@ -164,10 +164,17 @@ class ShaderSweeper:
             if folder_cleaned:
                 cleaned_folders.append(target["name"])
 
-        # Flush Windows Standby Memory list / Working set memory
+        # Flush Windows Standby Memory list using NtSetSystemInformation
+        # This is equivalent to what RAMMap and memory optimizers use to reclaim standby RAM
         try:
-            # Call EmptyWorkingSet on self to release cache handles
-            ctypes.windll.psapi.EmptyWorkingSet(ctypes.windll.kernel32.GetCurrentProcess())
+            # SystemMemoryListCommand = 0x50, MemoryPurgeStandbyList = 4
+            _nt = ctypes.windll.ntdll
+            command = ctypes.c_ulong(4)  # MemoryPurgeStandbyList
+            _nt.NtSetSystemInformation(
+                0x50,  # SystemMemoryListInformation
+                ctypes.byref(command),
+                ctypes.sizeof(command)
+            )
         except Exception:
             pass
 
